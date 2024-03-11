@@ -8,12 +8,13 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class AppPanel extends JPanel implements ActionListener {
+public class AppPanel extends JPanel implements Subscriber, ActionListener {
 
     private AppFactory factory;
-    public ControlPanel controlPanel;
-    public View view;
     private Model model;
+    private JFrame frame;
+    protected ControlPanel controlPanel;
+    public View view;
 
     public AppPanel(AppFactory factory) {
         this.factory = factory;
@@ -23,15 +24,15 @@ public class AppPanel extends JPanel implements ActionListener {
         this.setLayout((new GridLayout(1, 2)));
         this.add(controlPanel);
         this.add(view);
+        model.subscribe(this);
 
-        JFrame frame = new JFrame();
+        frame = new SafeFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container cp = frame.getContentPane();
         cp.add(this);
         frame.setJMenuBar(this.createMenuBar());
         frame.setTitle(factory.getTitle());
         frame.setSize(500, 300);
-        frame.setVisible(true);
     }
 
     protected JMenuBar createMenuBar() {
@@ -46,8 +47,10 @@ public class AppPanel extends JPanel implements ActionListener {
     }
 
     public void display() {
-        this.setVisible(true);
+        frame.setVisible(true);
     }
+
+    public void update() { }
 
     public void actionPerformed(ActionEvent e) {
         String cmmd = e.getActionCommand();
