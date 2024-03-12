@@ -20,13 +20,13 @@ public class GridFactory implements AppFactory {
     @Override
     public Command makeEditCommand(Model model, String type, Object source) {
         if(type.equals("RUN1"))
-            return new RunCommand(1);
+            return new RunCommand(model, 1);
         if(type.equals("RUN50"))
-            return new RunCommand(50);
+            return new RunCommand(model, 50);
         if(type.equals("POPULATE"))
-            return new PopulateCommand();
+            return new PopulateCommand(model, true);
         if(type.equals("CLEAR"))
-            return new ClearCommand();
+            return new ClearCommand(model);
 
         return null;
     }
