@@ -8,6 +8,7 @@ public abstract class Grid extends Model {
     static private int time = 0;
     protected int dim = 20;
     protected Cell[][] cells;
+    public int getDim() { return dim; }
     public int getTime() { return time; }
     public Cell getCell(int row, int col) { return cells[row][col]; }
     public abstract Cell makeCell();
