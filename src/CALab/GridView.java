@@ -28,7 +28,7 @@ public class GridView extends View {
         // call update method of each CellView
         for (CellView[] row : cellViews) {
             for(CellView cView : row) {
-                cView.update(msg, oldState, newState);
+                cView.update();
             }
         }
     }
