@@ -1,17 +1,12 @@
 package CALab;
 
 import mvc.*;
-public class GridFactory implements AppFactory {
+public abstract class GridFactory implements AppFactory {
     @Override
-    public Model makeModel() {
-        return new Grid();
-    }
+    public abstract Model makeModel();
 
     @Override
-    public View makeView(Model m) {
-        return new GridView(m);
-    }
-
+    public abstract View makeView(Model m);
     @Override
     public String[] getEditCommands() {
         return new String[] {"RUN1", "RUN50", "POPULATE", "CLEAR"};
