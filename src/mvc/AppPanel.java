@@ -10,21 +10,27 @@ import java.io.ObjectOutputStream;
 
 public class AppPanel extends JPanel implements Subscriber, ActionListener {
 
-    private AppFactory factory;
-    private Model model;
+    protected AppFactory factory;
+    protected Model model;
+    protected View view;
+    protected JPanel controlPanel;
     private JFrame frame;
-    protected ControlPanel controlPanel;
-    public View view;
+    public static int FRAME_WIDTH = 500;
+    public static int FRAME_HEIGHT = 300;
 
     public AppPanel(AppFactory factory) {
         this.factory = factory;
+
         model = factory.makeModel();
-        view = factory.makeView(model);
-        controlPanel = new ControlPanel();
-        this.setLayout((new GridLayout(1, 2)));
-        this.add(controlPanel);
-        this.add(view);
         model.subscribe(this);
+
+        this.setLayout((new GridLayout(1, 2)));
+
+        controlPanel = new JPanel();
+        this.add(controlPanel);
+
+        view = factory.makeView(model);
+        this.add(view);
 
         frame = new SafeFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,12 +38,12 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener {
         cp.add(this);
         frame.setJMenuBar(this.createMenuBar());
         frame.setTitle(factory.getTitle());
-        frame.setSize(500, 300);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
     }
 
     protected JMenuBar createMenuBar() {
         JMenuBar result = new JMenuBar();
-        JMenu fileMenu = Utilities.makeMenu("File", new String[]{"New", "Save", "Open", "Quit"}, this);
+        JMenu fileMenu = Utilities.makeMenu("File", new String[]{"New", "Save", "SaveAs", "Open", "Quit"}, this);
         result.add(fileMenu);
         JMenu editMenu = Utilities.makeMenu("Edit", factory.getEditCommands(), this);
         result.add(editMenu);
@@ -52,6 +58,14 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener {
 
     public void update() { }
 
+    public void setModel(Model newModel) {
+        this.model.unsubscribe(this);
+        this.model = newModel;
+        this.model.subscribe(this);
+        view.setModel(this.model);
+        model.changed();
+    }
+
     public void actionPerformed(ActionEvent e) {
         String cmmd = e.getActionCommand();
         Object source = e.getSource();
@@ -59,34 +73,31 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener {
         try {
             switch (cmmd) {
                 case "Save": {
-                     String fName = Utilities.getFileName((String) null, false);
-                     ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fName));
-                     os.writeObject(this.model);
-                     os.close();
-                     break;
+                    Utilities.save(model, false);
+                    break;
+                }
+
+                case "SaveAs": {
+                    Utilities.save(model, true);
                 }
 
                 case "Open": {
-                     if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
-                         String fName = Utilities.getFileName((String) null, true);
-                         ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
-                         model = (Model) is.readObject();
-                         view.setModel(model);
-                         is.close();
-                     }
-
-                     break;
+                    Model newModel = Utilities.open(model);
+                    if (newModel != null) setModel(newModel);
+                    break;
                 }
 
                 case "New": {
-                    model = factory.makeModel();
-                    view.setModel(model);
+                    Utilities.saveChanges(model);
+                    setModel(factory.makeModel());
+                    model.setUnsavedChanges(false);
                     break;
                 }
 
                 case "Quit": {
-                     System.exit(0);
-                     break;
+                    Utilities.saveChanges(model);
+                    System.exit(0);
+                    break;
                 }
 
                 case "About": {
@@ -95,10 +106,8 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener {
                 }
 
                 case "Help": {
-                     String[] cmmds = factory.getHelp();
-                     Utilities.inform(cmmds);
+                     Utilities.inform(factory.getHelp());
                      break;
-
                 }
 
                 default: {
@@ -115,6 +124,4 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener {
             Utilities.error(ex);
         }
     }
-
-    public class ControlPanel extends JPanel {}
 }
