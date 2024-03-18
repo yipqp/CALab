@@ -25,11 +25,11 @@ public class GridPanel extends AppPanel {
         run50.addActionListener(this);
         r50.add(run50);
 
-        populate = new JButton("populate");
+        populate = new JButton("POPULATE");
         populate.addActionListener(this);
         p.add(populate);
 
-        clear = new JButton("clear");
+        clear = new JButton("CLEAR");
         clear.addActionListener(this);
         c.add(clear);
 
