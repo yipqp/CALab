@@ -42,6 +42,7 @@ public class Agent extends Cell {
                 status = 1; // Cell comes back to life due to optimal conditions
             }
         }
+        notifySubscribers();
     }
 
     @Override
@@ -57,6 +58,7 @@ public class Agent extends Cell {
         } else {
             status = 0; // Reset to dead
         }
+        notifySubscribers();
     }
 
     @Override
