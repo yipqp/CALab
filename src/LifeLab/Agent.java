@@ -1,4 +1,4 @@
-package CALab;
+package LifeLab;
 
 import java.awt.Color;
 import java.util.Set;
