@@ -3,6 +3,8 @@ package LifeLab;
 import java.awt.Color;
 import java.util.Set;
 
+import CALab.Cell;
+
 public class Agent extends Cell {
     private int status; // 0 = dead, 1 = alive
     private int ambience; // Number of living neighbors
