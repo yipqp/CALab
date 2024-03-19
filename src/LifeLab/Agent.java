@@ -47,7 +47,7 @@ public class Agent extends Cell {
 
     @Override
     public void nextState() {
-        // No next state logic in Life Lab
+        status = (status + 1) % 2;
     }
 
     @Override
