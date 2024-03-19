@@ -25,6 +25,8 @@ public abstract class Grid extends Model {
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
                 cells[i][j] = makeCell();
+                cells[i][j].row = i;
+                cells[i][j].col = j;
             }
         }
 
@@ -59,9 +61,9 @@ public abstract class Grid extends Model {
     public Set<Cell> getNeighbors(Cell asker, int radius) {
         Set<Cell> reachableNeighbors = new HashSet<>();
 
-        for (int row = asker.row - radius; row < asker.row + radius; row++) {
-            for (int col = asker.col - radius; col < asker.col + radius; col++) {
-                if ((row >= 0 && row < dim) && (col >= 0 && col < dim) && (row != asker.row && col != asker.col)) {
+        for (int row = asker.row - radius; row <= asker.row + radius; row++) {
+            for (int col = asker.col - radius; col <= asker.col + radius; col++) {
+                if ((row >= 0 && row < dim) && (col >= 0 && col < dim) && (row != asker.row || col != asker.col)) {
                    reachableNeighbors.add(cells[row][col]);
                 }
             }
