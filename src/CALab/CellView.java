@@ -9,6 +9,7 @@ public class CellView extends JButton implements ActionListener, Subscriber {
     private Cell myCell;
 
     public CellView(Cell c) {
+        this.setOpaque(true);
         myCell = c;
         if (c != null) {
             c.subscribe(this);
