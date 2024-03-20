@@ -23,6 +23,8 @@ public class GridView extends View {
                 this.add(cellViews[i][j]);
             }
         }
+
+        grid.repopulate(false);
     }
 
     public void update() {

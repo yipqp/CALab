@@ -37,6 +37,8 @@ public abstract class Grid extends Model {
                 cells[i][j].neighbors = getNeighbors(cells[i][j], 1);
             }
         }
+
+
     }
 
     // called when Populate button is clicked
@@ -55,7 +57,7 @@ public abstract class Grid extends Model {
             }
         }
 
-        changed();
+        observe();
     }
 
     public Set<Cell> getNeighbors(Cell asker, int radius) {

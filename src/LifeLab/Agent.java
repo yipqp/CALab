@@ -66,6 +66,10 @@ public class Agent extends Cell {
         return status;
     }
 
+    public int getAmbience() {
+        return ambience;
+    }
+
     @Override
     public Color getColor() {
         // Color representation based on status
