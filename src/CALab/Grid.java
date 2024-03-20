@@ -59,17 +59,17 @@ public abstract class Grid extends Model {
     }
 
     public Set<Cell> getNeighbors(Cell asker, int radius) {
-        Set<Cell> reachableNeighbors = new HashSet<>();
+        Set<Cell> neighbors = new HashSet<>();
 
         for (int row = asker.row - radius; row <= asker.row + radius; row++) {
             for (int col = asker.col - radius; col <= asker.col + radius; col++) {
-                if ((row >= 0 && row < dim) && (col >= 0 && col < dim) && (row != asker.row || col != asker.col)) {
-                   reachableNeighbors.add(cells[row][col]);
+                if (row != asker.row || col != asker.col) {
+                    neighbors.add(cells[(row + dim) % dim][(col + dim) % dim]);
                 }
             }
         }
 
-        return reachableNeighbors;
+        return neighbors;
     }
 
     // overide these
