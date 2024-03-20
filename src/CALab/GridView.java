@@ -25,6 +25,23 @@ public class GridView extends View {
         }
     }
 
+    @Override
+    public void setModel(Model model) {
+        super.setModel(model);
+        Grid grid = (Grid) this.model;
+        int size = grid.getDim();
+        this.removeAll();
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                Cell cell = grid.getCell(i, j);
+                cell.row = i;
+                cell.col = j;
+                cellViews[i][j] = new CellView(cell);
+                this.add(cellViews[i][j]);
+            }
+        }
+    }
+
     public void update() {
         // call update method of each CellView
         for (CellView[] row : cellViews) {
