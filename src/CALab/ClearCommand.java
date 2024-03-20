@@ -10,6 +10,8 @@ public class ClearCommand extends Command {
 
     @Override
     public void execute() {
-        ((Grid) model).repopulate(false); // Reset all cells to dead (status 0)
+        // Reset all cells to dead (status 0)
+        ((Grid) model).repopulate(false);
+        ((Grid) model).resetTime();
     }
 }

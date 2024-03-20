@@ -120,4 +120,8 @@ public abstract class Grid extends Model {
             System.out.println("time = " + time);
         }
     }
+
+    public void resetTime() {
+        time = 0;
+    }
 }
