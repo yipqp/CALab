@@ -32,18 +32,14 @@ public class GridView extends View {
         super.setModel(model);
         Grid grid = (Grid) this.model;
         int size = grid.getDim();
-        this.removeAll();
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                Cell cell = grid.getCell(i, j);
-                cell.row = i;
-                cell.col = j;
-                cellViews[i][j] = new CellView(cell);
-                this.add(cellViews[i][j]);
+                cellViews[i][j].setCell(grid.getCell(i, j));
             }
         }
 
         grid.repopulate(false);
+        update();
     }
 
     public void update() {
