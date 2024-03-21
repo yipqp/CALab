@@ -38,8 +38,6 @@ public class GridView extends View {
             }
         }
 
-        grid.repopulate(false);
-        grid.resetTime();
         update();
     }
 

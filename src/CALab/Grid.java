@@ -17,6 +17,8 @@ public abstract class Grid extends Model {
         this.dim = dim;
         cells = new Cell[dim][dim];
         populate();
+        repopulate(false);
+        resetTime();
     }
 
     public Grid() { this(20); }
