@@ -43,20 +43,11 @@ public abstract class Grid extends Model {
 
     // called when Populate button is clicked
     public void repopulate(boolean randomly) {
-        if (randomly) {
-            for (int i = 0; i < dim; i++) {
-                for (int j = 0; j < dim; j++) {
-                    cells[i][j].reset(randomly);
-                }
-            }
-        } else {
-            for (int i = 0; i < dim; i++) {
-                for (int j = 0; j < dim; j++) {
-                    cells[i][j].reset(false);
-                }
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
+                cells[i][j].reset(randomly);
             }
         }
-
         observe();
     }
 
