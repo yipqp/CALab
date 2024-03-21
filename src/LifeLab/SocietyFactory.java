@@ -13,9 +13,4 @@ public class SocietyFactory extends GridFactory {
         return new GridView((Society) m);
     }
 
-    public static void main(String[] args) {
-        AppFactory factory = new SocietyFactory();
-        AppPanel panel = new GridPanel(factory);
-        panel.display();
-    }
 }
