@@ -6,7 +6,6 @@ public abstract class Model extends Publisher implements Serializable {
 
     private boolean unsavedChanges;
     private String fName;
-    private boolean changed;
 
     public Model() {
         unsavedChanges = false;
@@ -29,7 +28,7 @@ public abstract class Model extends Publisher implements Serializable {
     }
 
     public void changed() {
-        changed = true;
+        unsavedChanges = true;
         notifySubscribers();
     }
 
