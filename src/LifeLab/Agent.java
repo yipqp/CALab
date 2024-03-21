@@ -54,7 +54,7 @@ public class Agent extends Cell {
     public void reset(boolean randomly) {
         // Reset status randomly or to dead
         if (randomly) {
-            status = (Math.random() < 0.5) ? 1 : 0; // Randomly set status to alive or dead
+            status = (Math.random() < Society.percentAlive) ? 1 : 0; // Randomly set status to alive or dead
         } else {
             status = 0; // Reset to dead
         }
